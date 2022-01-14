@@ -1,0 +1,49 @@
+!!!!calculate the field reli
+!!!!IMPROVED BY LPF 20210102
+
+FCT @RELI(num ^field)
+    
+      LCL NUM ^POLINPUT(5) ^tra_output(10,22) ^ABC1  ^ABC ^RI1 ^RI ^RELI ^overfill_fac ^NRD  ^minVigY
+      LCL STR ^fld_typ 
+!       OUT Y
+       
+!       ^field == 3
+      ^overfill_fac == 1.25
+      ^NRD == 31
+      IF (^field > (NUM F)) OR (^field < 0)
+         ^reli == 0
+         GOT LPF
+      END IF      
+      ^f ==  ^field
+      ^z == 1
+      ^minVigY == 1e20
+           ^fld_typ == (typ fld)
+         if ^fld_typ="ANG"
+            ^fld == (YAN F^f Z^z)
+           
+        else if ^fld_typ="OBJ"
+            ^fld == (YOB F^f Z^z)
+            
+        else if ^fld_typ="IMG"
+            ^fld == (YIM F^f Z^z)
+           
+        else if ^fld_typ="RIH"
+            ^fld == (YRI F^f Z^z)
+           
+        end if
+        ^minVigY == MINF((vly f^field Z1), (vuy f^field Z1))
+     IF ^overfill_fac < absf(^minVigY)
+         ^newFactor == absf(^minVigY)
+         ^nrd == ^nrd * (^newFactor/^overfill_fac)
+         ^overfill_fac == ^newFactor   
+     END IF
+    ^POLINPUT(1) == 0 
+    ^ABC1 == TRA_1FLD(1,0,0,31,0,1.25,^POLINPUT,^tra_output)
+    ^RI1 == ^tra_output(4,(NUM W)+1)
+    ^ABC == TRA_1FLD(1,0,^FLD,^NRD,0,^overfill_fac,^POLINPUT,^tra_output)
+    ^RI == ^tra_output(4,(NUM W)+1)
+    ^RELI == ^RI/^RI1*100
+    LBL LPF
+!     WRI ^RELI
+END FCT ^reli
+wri "@RELI(num ^field)"
