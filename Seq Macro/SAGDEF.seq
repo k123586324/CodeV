@@ -1,0 +1,32 @@
+fct @SAGN(num ^s1, num ^z1, num ^d1)!!@SAA(第幾面,ZOOM, 要掃的最大半徑)
+lcl num ^answer
+lcl num ^LC
+lcl num ^dn
+lcl num ^step
+^dn == 20
+^step == ^d1/^dn
+^answer == 0
+for ^i 2 (^dn)
+^LC == SAGF(^s1, ^z1, 0, ^i*^step)-SAGF(^s1, ^z1, 0, (^i-1)*^step)
+if ^LC < ^answer
+^answer == ^LC
+end if
+end for
+end fct ^answer
+
+
+fct @SAGP(num ^s1, num ^z1, num ^d1)!!@SAA(第幾面,ZOOM, 要掃的最大半徑)
+lcl num ^answer
+lcl num ^LC
+lcl num ^dn
+lcl num ^step
+^dn == 20
+^step == ^d1/^dn
+^answer == 0
+for ^i 2 (^dn)
+^LC == SAGF(^s1, ^z1, 0, ^i*^step)-SAGF(^s1, ^z1, 0, (^i-1)*^step)
+if ^LC > ^answer
+^answer == ^LC
+end if
+end for
+end fct ^answer

@@ -1,0 +1,28 @@
+fct @LACL(num ^w1, num ^w2,num ^w3, num ^f1, num ^z1)!!@LACL(wave1,wave2, wave3, field, ZOOM)
+lcl num ^answer
+lcl num ^LC
+
+^answer == 0
+
+
+^LC == ABSF((Y SI R1 F^f1 W^w1 Z^z1)-(Y SI R1 F^f1 W^w2 Z^z1))
+if ^LC > ^answer
+^answer == ^LC
+end if
+
+
+
+^LC == ABSF((Y SI R1 F^f1 W^w1 Z^z1)-(Y SI R1 F^f1 W^w3 Z^z1))
+if ^LC > ^answer
+^answer == ^LC
+end if
+
+
+
+^LC == ABSF((Y SI R1 F^f1 W^w2 Z^z1)-(Y SI R1 F^f1 W^w3 Z^z1))
+if ^LC > ^answer
+^answer == ^LC
+end if
+
+
+end fct ^answer
