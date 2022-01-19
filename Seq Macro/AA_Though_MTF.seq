@@ -1,0 +1,22 @@
+for ^i -10 10 1
+^d==(^i/200)
+YDE  S1 ^d
+mtf
+GEO NO
+CHT FRE  N
+CHT FOC  Y; FRE 125
+dcs n !Display Chart to Screen
+wgf png num_to_str((^i+10)) 1024 768 !Write chart to Graphics File
+^file_name==concat(num_to_str((^i+10)),".txt")
+out t ^file_name !output File
+go
+ccw!Clear Command Window
+
+!^layout_file_name==concat("layout_",num_to_str(^i))
+!GRA ^layout_file_name ! Send vector graphics to a PLT file 
+!vie;go
+!GRA t ! Send graphics back to the screen display 
+!^layout_file_name==concat(^layout_file_name,".plt")
+!GCV JPG ^layout_file_name ! Convert PLT file into JPEG format 
+
+end for
